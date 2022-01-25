@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ModelsConverter.Core.Converters.Typescript
 {
-    internal class TypescriptConverter : ILanguageConverter
+    public class TypescriptConverter : ILanguageConverter
     {
         public ConvertedModel Convert(Type type)
         {
@@ -42,7 +42,7 @@ namespace ModelsConverter.Core.Converters.Typescript
 
             sb.AppendLine("}");
 
-            return sb.ToString();
+            return sb.ToString().Trim(" \r\n".ToCharArray());
         }
 
         public IEnumerable<ConvertedProperty> ConvertProperties(PropertyInfo[] properties)
@@ -59,16 +59,26 @@ namespace ModelsConverter.Core.Converters.Typescript
 
         public string ConvertTypeName(string typeName)
         {
-            return typeName switch
-            {
-                "string" => "string",
-                "long" => "number",
-                "int" => "number",
-                "short" => "number",
-                "float" => "number",
-                "bool" => "boolean",
-                _ => typeName
-            };
+            //todo optimize
+            var stringType = typeof(string).Name;
+            var longType = typeof(long).Name;
+            var intType = typeof(int).Name;
+            var shortType = typeof(short).Name;
+            var floatType = typeof(float).Name;
+            var boolType = typeof(bool).Name;
+            if(typeName == stringType)
+                return "string";
+            if(typeName == longType)
+                return "number";
+            if (typeName == intType)
+                return "number";
+            if (typeName == shortType)
+                return "number";
+            if (typeName == floatType)
+                return "number";
+            if (typeName == boolType)
+                return "boolean";
+            return typeName;
         }
     }
 }
