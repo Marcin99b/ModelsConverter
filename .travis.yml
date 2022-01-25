@@ -1,0 +1,19 @@
+language: csharp
+dist: focal
+mono: none
+services:
+  - docker
+before_script:
+  - chmod -R a+x scripts
+  - wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+  - sudo dpkg -i packages-microsoft-prod.deb
+  - sudo apt-get update
+  - sudo apt-get install -y apt-transport-https
+  - sudo apt-get update
+  - sudo apt-get install -y dotnet-sdk-6.0
+script:
+  - "./scripts/travis-build.sh"
+notifications:
+  email:
+    on_success: never
+    on_failure: always
