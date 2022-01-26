@@ -49,10 +49,9 @@ namespace ModelsConverter.Core.Tests.Converters
         public void Render_ShouldRenderBasicModel(string typeName, string propertyName, string excepted)
         {
             //Arrange
-            var converter = new TypescriptConverter();
-            var name = "TestClass";
+            var className = "TestClass";
             var convertedProperties = new[] { new TypescriptProperty(typeName, propertyName) };
-            var model = new TypescriptModel(name, null, convertedProperties);
+            var model = new TypescriptModel(className, null, convertedProperties);
             var config = new TypescriptConfiguration { SpacesBeforeProperties = 2 };
 
             //Act
@@ -60,7 +59,7 @@ namespace ModelsConverter.Core.Tests.Converters
 
             //Assert
             result.Should().Be(
-$@"export class TestClass {{
+$@"export class {className} {{
   {excepted}
 }}".Trim(" \r\n".ToCharArray()));
         }
