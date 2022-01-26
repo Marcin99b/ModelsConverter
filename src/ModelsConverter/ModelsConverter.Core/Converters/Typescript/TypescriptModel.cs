@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelsConverter.Core.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,48 +22,28 @@ namespace ModelsConverter.Core.Converters.Typescript
 
         public string Render(TypescriptConfiguration configuration)
         {
-            var sb = new StringBuilder();
-            var classLine = "export class " + this.Name;
-            if (this.Extends != null)
-            {
-                classLine += "extends " + string.Join(", ", this.Extends);
-            }
-            classLine += " {";
-            sb.AppendLine(classLine);
+            var spaces = string.Empty
+                .AddSpaces(configuration.SpacesBeforeProperties);
 
-            var spaces = string.Empty;
-            for (var i = 0; i < configuration.SpacesBeforeProperties; i++)
-            {
-                spaces += " ";
-            }
-            foreach (var property in this.Properties)
-            {
-                var propertyLine = spaces + property.Render();
-                sb.AppendLine(propertyLine);
-            }
+            var result = new StringBuilder()
+                .AppendLine(this.RenderClassLine(this.Name, this.Extends))
+                .AppendLineForeach(this.Properties, x => $"{spaces}{x.Render()}")
+                .AppendLine("}")
+                .ToString()
+                .TrimSpacesAndNewlines();
 
-            sb.AppendLine("}");
-
-            return sb.ToString().Trim(" \r\n".ToCharArray());
+            return result;
         }
-    }
 
-    public class TypescriptProperty : IConvertedProperty
-    {
-        public string TypeName { get; }
-        public string PropertyName { get; }
-
-        public TypescriptProperty(string typeName, string propertyName)
+        private string RenderClassLine(string name, string[]? extends)
         {
-            this.TypeName = typeName;
-            this.PropertyName = propertyName;
+            var result = $"export class {name}";
+            if (extends != null)
+            {
+                result += $"extends {string.Join(", ", extends)}";
+            }
+            result += " {";
+            return result;
         }
-
-        public string Render() => $"{this.PropertyName}: {this.TypeName};";
-    }
-
-    public class TypescriptConfiguration : ILanguageConverterConfiguration
-    {
-        public int SpacesBeforeProperties { get; set; } = 2;
     }
 }

@@ -5,6 +5,6 @@
         where P : IConvertedProperty
         where C : ILanguageConverterConfiguration
     {
-        public IConvertedModel<P, C> Convert(Type type);
+        public IConvertedModel<P, C> Convert(Type type, C configuration);
     }
 }

@@ -9,46 +9,30 @@ namespace ModelsConverter.Core.Converters.Typescript
 {
     public class TypescriptConverter : ILanguageConverter<TypescriptModel, TypescriptProperty, TypescriptConfiguration>
     {
-        public IConvertedModel<TypescriptProperty, TypescriptConfiguration> Convert(Type type)
+        public IConvertedModel<TypescriptProperty, TypescriptConfiguration> Convert(Type type, TypescriptConfiguration configuration)
         {
             var properties = type.GetProperties();
-            var convertedProperties = this.ConvertProperties(properties);
+            var convertedProperties = this.ConvertProperties(properties, configuration);
             return new TypescriptModel(type.Name, null, convertedProperties.ToArray());
         }
 
-        public IEnumerable<TypescriptProperty> ConvertProperties(PropertyInfo[] properties)
+        public IEnumerable<TypescriptProperty> ConvertProperties(PropertyInfo[] properties, TypescriptConfiguration configuration)
         {
             foreach (var property in properties)
             {
-                //todo check if type is in input types
                 var type = property.PropertyType.Name;
                 var name = property.Name;
-                var convertedTypeName = this.ConvertTypeName(type);
+                var convertedTypeName = this.ConvertTypeName(type, configuration);
                 yield return new TypescriptProperty(convertedTypeName, name);
             }
         }
 
-        public string ConvertTypeName(string typeName)
+        public string ConvertTypeName(string typeName, TypescriptConfiguration configuration)
         {
-            //todo optimize
-            var stringType = typeof(string).Name;
-            var longType = typeof(long).Name;
-            var intType = typeof(int).Name;
-            var shortType = typeof(short).Name;
-            var floatType = typeof(float).Name;
-            var boolType = typeof(bool).Name;
-            if(typeName == stringType)
-                return "string";
-            if(typeName == longType)
-                return "number";
-            if (typeName == intType)
-                return "number";
-            if (typeName == shortType)
-                return "number";
-            if (typeName == floatType)
-                return "number";
-            if (typeName == boolType)
-                return "boolean";
+            if(configuration.TypeNames.ContainsKey(typeName))
+            {
+                return configuration.TypeNames[typeName];
+            }
             return typeName;
         }
     }

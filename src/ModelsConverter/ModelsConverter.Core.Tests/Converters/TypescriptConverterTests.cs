@@ -27,9 +27,10 @@ namespace ModelsConverter.Core.Tests.Converters
         {
             //Arrange
             var converter = new TypescriptConverter();
+            var configuration = new TypescriptConfiguration();
 
             //Act
-            var model = converter.Convert(type);
+            var model = converter.Convert(type, configuration);
 
             //Assert
             model.Properties.Should().HaveCount(1);
