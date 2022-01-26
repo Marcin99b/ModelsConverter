@@ -59,7 +59,6 @@ namespace ModelsConverter.Core
                 SupportedLanguages.TypeScript => new TypescriptConfiguration(),
                 _ => throw new NotImplementedException()
             };
-
     }
 
     public enum SupportedLanguages
