@@ -15,7 +15,7 @@ namespace ModelsConverter.Core
             this.types = types;
         }
 
-        public static ModelsConverter Load(Type[] types)
+        public static ModelsConverter Load(params Type[] types)
         {
             return new ModelsConverter(types);
         }
