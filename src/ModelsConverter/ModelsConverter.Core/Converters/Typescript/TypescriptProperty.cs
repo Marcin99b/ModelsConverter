@@ -1,16 +1,11 @@
 ﻿namespace ModelsConverter.Core.Converters.Typescript
 {
-    public class TypescriptProperty : IConvertedProperty
+    public class TypescriptProperty : ConvertedProperty
     {
-        public string TypeName { get; }
-        public string PropertyName { get; }
-
-        public TypescriptProperty(string typeName, string propertyName)
+        public TypescriptProperty(string typeName, string propertyName) : base(typeName, propertyName)
         {
-            this.TypeName = typeName;
-            this.PropertyName = propertyName;
         }
 
-        public string Render() => $"{this.PropertyName}: {this.TypeName};";
+        public override string Render() => $"{this.PropertyName}: {this.TypeName};";
     }
 }
