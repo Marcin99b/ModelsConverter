@@ -25,9 +25,9 @@ namespace ModelsConverter.Core
             return this;
         }
 
-        public string Read()
+        public IEnumerable<string> Read()
         {
-            return string.Empty;
+            return new List<string>();
         }
 
         public ModelsConverter SaveTo(string path)
