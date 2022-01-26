@@ -12,6 +12,7 @@ namespace ModelsConverter.Core.Converters.Typescript
         public string Name { get; }
         public string[]? Extends { get; }
         public TypescriptProperty[] Properties { get; }
+        IConvertedProperty[] IConvertedModel.Properties => this.Properties;
 
         public TypescriptModel(string name, string[]? extends, TypescriptProperty[] properties)
         {
@@ -35,6 +36,8 @@ namespace ModelsConverter.Core.Converters.Typescript
             return result;
         }
 
+        public string Render(ILanguageConverterConfiguration configuration) => this.Render(configuration);
+
         private string RenderClassLine(string name, string[]? extends)
         {
             var result = $"export class {name}";
@@ -45,5 +48,7 @@ namespace ModelsConverter.Core.Converters.Typescript
             result += " {";
             return result;
         }
+
+        
     }
 }

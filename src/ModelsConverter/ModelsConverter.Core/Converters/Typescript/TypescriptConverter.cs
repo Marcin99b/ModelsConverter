@@ -9,6 +9,9 @@ namespace ModelsConverter.Core.Converters.Typescript
 {
     public class TypescriptConverter : ILanguageConverter<TypescriptModel, TypescriptProperty, TypescriptConfiguration>
     {
+        public IConvertedModel Convert(Type type, ILanguageConverterConfiguration configuration)
+            => this.Convert(type, configuration);
+
         public IConvertedModel<TypescriptProperty, TypescriptConfiguration> Convert(Type type, TypescriptConfiguration configuration)
         {
             var properties = type.GetProperties();
