@@ -34,7 +34,7 @@ namespace ModelsConverter.Core.Tests.Converters
             //Assert
             model.Properties.Should().HaveCount(1);
             model.Properties.Single().TypeName.Should().BeEquivalentTo(expectedTypeName);
-            model.Properties.Single().Name.Should().Be("A");
+            model.Properties.Single().PropertyName.Should().Be("A");
         }
 
         [Test]
@@ -45,17 +45,18 @@ namespace ModelsConverter.Core.Tests.Converters
             //Arrange
             var converter = new TypescriptConverter();
             var name = "TestClass";
-            var convertedProperties = new[] { new ConvertedProperty(typeName, propertyName) };
-            var model = new ConvertedModel(name, null, convertedProperties);
+            var convertedProperties = new[] { new TypescriptProperty(typeName, propertyName) };
+            var model = new TypescriptModel(name, null, convertedProperties);
+            var config = new TypescriptConfiguration { SpacesBeforeProperties = 2 };
 
             //Act
-            var result = converter.Render(model);
+            var result = model.Render(config);
 
             //Assert
             result.Should().Be(
 $@"export class TestClass {{
   {excepted}
-}}");
+}}".Trim(" \r\n".ToCharArray()));
         }
     }
 }

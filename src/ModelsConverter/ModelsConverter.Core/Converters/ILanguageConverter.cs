@@ -1,7 +1,10 @@
 ﻿namespace ModelsConverter.Core.Converters
 {
-    public interface ILanguageConverter
+    public interface ILanguageConverter<T, P, C> 
+        where T : IConvertedModel<P, C>
+        where P : IConvertedProperty
+        where C : ILanguageConverterConfiguration
     {
-        public ConvertedModel Convert(Type type);
+        public IConvertedModel<P, C> Convert(Type type);
     }
 }
