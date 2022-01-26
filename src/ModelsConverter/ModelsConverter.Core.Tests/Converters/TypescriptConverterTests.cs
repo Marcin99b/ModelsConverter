@@ -21,7 +21,9 @@ namespace ModelsConverter.Core.Tests.Converters
         [TestCase(typeof(ShortClass), "number")]
         [TestCase(typeof(FloatClass), "number")]
         [TestCase(typeof(BoolClass), "boolean")]
-        public void Convert_ShouldConvertBasicPropertiesToModel(Type type, string expectedTypeName)
+        [TestCase(typeof(StringClassInClass), "StringClass")]
+        [TestCase(typeof(BoolClassInClass), "BoolClass")]
+        public void Convert_ShouldConvertPropertiesToModel(Type type, string expectedTypeName)
         {
             //Arrange
             var converter = new TypescriptConverter();
@@ -36,12 +38,14 @@ namespace ModelsConverter.Core.Tests.Converters
         }
 
         [Test]
-        public void Render_ShouldRenderBasicModel()
+        [TestCase("string", "test", "test: string;")]
+        [TestCase("number", "AA", "AA: number;")]
+        public void Render_ShouldRenderBasicModel(string typeName, string propertyName, string excepted)
         {
             //Arrange
             var converter = new TypescriptConverter();
             var name = "TestClass";
-            var convertedProperties = new[] { new ConvertedProperty("string", "test") };
+            var convertedProperties = new[] { new ConvertedProperty(typeName, propertyName) };
             var model = new ConvertedModel(name, null, convertedProperties);
 
             //Act
@@ -49,9 +53,9 @@ namespace ModelsConverter.Core.Tests.Converters
 
             //Assert
             result.Should().Be(
-@"export class TestClass {
-  test: string;
-}");
+$@"export class TestClass {{
+  {excepted}
+}}");
         }
     }
 }
