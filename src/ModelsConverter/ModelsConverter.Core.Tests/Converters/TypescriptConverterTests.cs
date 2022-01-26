@@ -46,7 +46,7 @@ namespace ModelsConverter.Core.Tests.Converters
         [Test]
         [TestCase("string", "test", "test: string;")]
         [TestCase("number", "AA", "AA: number;")]
-        public void Render_ShouldRenderBasicModel(string typeName, string propertyName, string excepted)
+        public void Model_Render_ShouldRenderBasicModel(string typeName, string propertyName, string excepted)
         {
             //Arrange
             var className = "TestClass";
@@ -62,6 +62,22 @@ namespace ModelsConverter.Core.Tests.Converters
 $@"export class {className} {{
   {excepted}
 }}".Trim(" \r\n".ToCharArray()));
+        }
+
+        [Test]
+        [TestCase("string", "Test", "Test: string;")]
+        [TestCase("number", "aa", "aa: number;")]
+        [TestCase("Test", "name", "name: Test;")]
+        public void Property_Render_ShouldRenderProperty(string typeName, string propertyName, string excepted)
+        {
+            //Arrange
+            var property = new TypescriptProperty(typeName, propertyName);
+
+            //Act
+            var result = property.Render();
+
+            //Assert
+            result.Should().Be(excepted);
         }
     }
 }
