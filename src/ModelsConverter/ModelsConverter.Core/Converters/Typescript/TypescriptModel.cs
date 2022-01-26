@@ -11,8 +11,7 @@ namespace ModelsConverter.Core.Converters.Typescript
     {
         public string Name { get; }
         public string[]? Extends { get; }
-        public TypescriptProperty[] Properties { get; }
-        IConvertedProperty[] IConvertedModel.Properties => this.Properties;
+        public IConvertedProperty[] Properties { get; }
 
         public TypescriptModel(string name, string[]? extends, TypescriptProperty[] properties)
         {

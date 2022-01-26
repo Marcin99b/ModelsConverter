@@ -12,7 +12,6 @@
         where T : IConvertedProperty
         where C : ILanguageConverterConfiguration 
     {
-        T[] Properties { get; }
         string Render(C configuration);
     }
 }
