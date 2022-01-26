@@ -8,7 +8,7 @@ namespace ModelsConverter.Core.Tests.TestModels
 {
     public class StringClass
     {
-        public string A { get; set; }
+        public string? A { get; set; }
     }
 
     public class LongClass

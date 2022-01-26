@@ -8,11 +8,11 @@ namespace ModelsConverter.Core.Tests.TestModels
 {
     public class StringClassInClass
     {
-        public StringClass A { get; set; }
+        public StringClass? A { get; set; }
     }
 
     public class BoolClassInClass
     {
-        public BoolClass A { get; set; }
+        public BoolClass? A { get; set; }
     }
 }
