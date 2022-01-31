@@ -34,10 +34,17 @@ Fill form in right side
 - link issue
 - wait for comments or approvement
 
-## Code conventions
+## 5 - Don't forget
+
+- every branch must be named in convention described upper
+- don't forget about conventions and rules described below
+- don't forget about pulling code from `main` branch from main repo to your fork
+
+## Code conventions and rules
 
 - use `this` everywhere you can
 - use `this` over underscore
+- don't forget about good practices like SOLID, DRY, KISS, YAGNI, GRASP etc
 - interfaces make code more testable
 - use singletons over static classes
 - extension methods are good for very simple logic
